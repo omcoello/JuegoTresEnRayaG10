@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logic;
 
 /**
@@ -12,13 +7,13 @@ package Logic;
 public class Casilla {
     
     private boolean empty;
-    private String symbol;
+    private boolean circleTurn;
     
     public Casilla(){
         empty = true;
     }
-    public Casilla(String symbol){
-        this.symbol = symbol;
+    public Casilla(boolean circleTurn){
+        this.circleTurn = circleTurn;
         empty = false;
     }
     
@@ -26,7 +21,11 @@ public class Casilla {
         return this.empty == true;
     }
     
-    public String getSymbol(){
-        return this.symbol;        
+    public boolean getSymbol(){
+        return this.circleTurn;        
+    }
+    
+    public void setCircleTurn(boolean circleTurn){
+        this.circleTurn = circleTurn;
     }
 }
