@@ -10,5 +10,9 @@ package Logic;
  * @author omarc
  */
 public class Tablero {
+    private Casilla tab[][];
     
+    public Tablero(){
+        this.tab  = new Casilla[3][3];
+    }
 }

@@ -11,4 +11,22 @@ package Logic;
  */
 public class Casilla {
     
+    private boolean empty;
+    private String symbol;
+    
+    public Casilla(){
+        empty = true;
+    }
+    public Casilla(String symbol){
+        this.symbol = symbol;
+        empty = false;
+    }
+    
+    public boolean isEmpty(){
+        return this.empty == true;
+    }
+    
+    public String getSymbol(){
+        return this.symbol;        
+    }
 }
