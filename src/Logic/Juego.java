@@ -8,13 +8,13 @@ import Tree.Tree;
  */
 public class Juego {
 
-    private Tree<Tablero> tree;
+    private Tree<Tablero> generalTree;
 
     public Juego(boolean circleTurn) {
-        tree = generateTree(new Tablero(), circleTurn);
+        generalTree = generateTree(new Tablero(), circleTurn, new Tree());
     }
 
-    public Tree<Tablero> generateTree(Tablero tab, boolean circleTurn) {
+    public Tree<Tablero> generateTree(Tablero tab, boolean circleTurn, Tree<Tablero> tree) {
 
         if (tab.isEmptyTab() || !tab.isFullTab()) {
             Casilla casillas[][] = tab.getTab();
@@ -23,7 +23,7 @@ public class Juego {
                     if (casillas[i][j].isEmpty()) {
                         casillas[i][j] = new Casilla(circleTurn);
                         tab.setTab(casillas);
-                        tree.getRoot().getChildren().add(generateTree(tab, !circleTurn));
+                        tree.getRoot().getChildren().add(generateTree(tab, !circleTurn, tree.getRoot().getChildren().get(tree.getRoot().getChildren().size()-1)));
                     }
                 }
             }
