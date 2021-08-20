@@ -161,7 +161,7 @@ public class Tablero {
         Collections.addAll(resultante, tablero);
         return resultante;
     }
-    
+
     //Solo para arreglos de igual dimension
     private boolean arreglosIguales(String[] array1, String[] array2) {
         return Arrays.equals(array1, array2);
@@ -195,6 +195,18 @@ public class Tablero {
             }
         }
         return false;
+    }
+
+    public int numEspaciosVacios() {
+        int espacios = 0;
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[i].length; j++) {
+                if (tablero[i][j].equals("-1")) {
+                    espacios++;
+                }
+            }
+        }
+        return espacios;
     }
 
 }
