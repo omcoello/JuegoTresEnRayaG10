@@ -1,6 +1,6 @@
 package Jugadores;
 
-import LogicaTablero.Tablero;
+import Logic.Tablero;
 
 import java.util.ArrayList;
 import java.util.Arrays;

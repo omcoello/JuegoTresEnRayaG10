@@ -1,4 +1,4 @@
-package LogicaTablero;
+package Logic;
 
 import java.util.*;
 

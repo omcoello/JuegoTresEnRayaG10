@@ -2,8 +2,8 @@ package Main;
 
 import Jugadores.ComputadoraIA;
 import Jugadores.Persona;
-import LogicaTablero.Tablero;
-import TheGame.Game;
+import Logic.Tablero;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +14,8 @@ public class Main {
         Persona player1 = new Persona();
         ComputadoraIA cpu = new ComputadoraIA();
         Tablero chess = new Tablero();
-        Game g1 = new Game(player1, cpu, chess);
-        g1.startGame();
+        /*Game g1 = new Game(player1, cpu, chess);
+        g1.startGame();*/
 
     }
 
