@@ -22,7 +22,7 @@ public class Juego {
                 for (int j = 0; j < 3; ++j) {
                     if (casillas[i][j].isEmpty()) {
                         casillas[i][j] = new Casilla(circleTurn);
-                        tab.setTab(casillas);
+                        tab.setTab(casillas);                        
                         tree.getRoot().getChildren().add(generateTree(tab, !circleTurn, tree.getRoot().getChildren().get(tree.getRoot().getChildren().size()-1)));
                     }
                 }
