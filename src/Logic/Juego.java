@@ -27,13 +27,13 @@ public class Juego {
     }
 
     public void startGame(){
-        asginarSimbolos();
+        asignarSimbolos();
         escogerTurno();
         tablero.verTablero();
         ingresarSimbolos();
     }
 
-    private void asginarSimbolos(){
+    private void asignarSimbolos(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Escoge tu simbolo (X || O): ");
         String simbolo = sc.nextLine();
