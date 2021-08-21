@@ -1,10 +1,6 @@
 package Jugadores;
 
-import Logic.Tablero;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.Objects;
 
 public class Persona extends Player {
@@ -15,7 +11,7 @@ public class Persona extends Player {
     public Persona(String name, String symbol, boolean turn) {
         super(name, symbol, turn);
     }
-      
+     /* 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -32,5 +28,5 @@ public class Persona extends Player {
     public int hashCode() {
         return Objects.hash(getSymbol());
     }
-
+*/
 }
