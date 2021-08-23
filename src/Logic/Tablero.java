@@ -158,11 +158,13 @@ public class Tablero {
     //conjunto con 3 arreglos, las 3 columnas
     public LinkedHashSet<String[]> getListaColumnas() {
         LinkedHashSet<String[]> resultante = new LinkedHashSet<>();
-        for (int i = 0; i < tablero.length; i++) {
-            for (int j = 0; j < tablero[i].length; j++) {
-                resultante.add(tablero[j]);
+        String[][] aux = new String[3][3];
+        for(int i = 0; i<tablero.length; i++){
+            for(int j = 0; j<tablero[i].length; j++){
+                aux[i][j] = tablero[j][i];
             }
         }
+        Collections.addAll(resultante, aux);
         return resultante;
     }
 
