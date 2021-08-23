@@ -61,7 +61,7 @@ public class Juego {
             if (tablero.isWinner(humanPlayer)) {
                 System.out.println("GANADOR: HUMANO");
             } else if (tablero.isWinner(computadoraIA)) {
-                System.out.println("GANADOR: CPU");                
+                System.out.println("GANADOR: CPU");
             }
         }
     }
@@ -105,7 +105,7 @@ public class Juego {
             String casillas[][] = tab.getTablero();
             for (int i = 0; i < 3; ++i) {
                 for (int j = 0; j < 3; ++j) {
-                    if (casillas[i][j].isEmpty()) {
+                    if (casillas[i][j].equals("-1")) {
                         casillas[i][j] = turn;
                         tree.getRoot().getChildren().add(new Tree(tab));
                         turn = alternateTurn(turn);
@@ -125,13 +125,22 @@ public class Juego {
             return "X";
         }
     }
-    
-    public Tree<Tablero> getChild(Tablero tab){
-        
+
+    public Tree<Tablero> getChild(Tablero tab, Tree<Tablero> tree) {
+
         Tree<Tablero> child = null;
-        
-        
-        
+        if (!tree.getRoot().getChildren().isEmpty()) {
+            for (Tree<Tablero> t : tree.getRoot().getChildren()) {
+                if (t.getRoot().getContent().compareTab(tab) == 0) {
+                    return t;
+                }
+                child = getChild(tab, t);
+
+                if (child != null) {
+                    return child;
+                }
+            }
+        }
         return child;
     }
 
