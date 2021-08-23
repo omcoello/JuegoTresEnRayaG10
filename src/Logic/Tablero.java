@@ -222,7 +222,7 @@ public class Tablero {
         return espacios;
     }
 
-    public int getUtility(Player p1, Player p2) {
+    public int calculateUtility(Player p1, Player p2) {
         int utilidadP1 = contarFilasDisponibles(p1.getSymbol()) + contarColumnasDisponibles(p1.getSymbol()) + contarDiagonalesDisponibles(p1.getSymbol());
         int utilidadP2 = contarFilasDisponibles(p2.getSymbol()) + contarColumnasDisponibles(p2.getSymbol()) + contarDiagonalesDisponibles(p2.getSymbol());
 
