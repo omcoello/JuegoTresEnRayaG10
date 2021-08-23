@@ -30,6 +30,17 @@ public class Tablero {
         this.utilidad = utilidad;
     }
 
+    public int compareTab(Tablero tab) {
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                if (this.tablero[i][j].compareTo(tab.tablero[i][j]) != 0) {
+                    return -1;
+                }
+            }
+        }
+        return 0;
+    }
+
     //imprime la matriz
     public void verTablero() {
         for (String[] String : tablero) {
@@ -209,4 +220,10 @@ public class Tablero {
         return espacios;
     }
 
+    public int getUtility(Player p1, Player p2) {
+        int utilidadP1 = contarFilasDisponibles(p1.getSymbol()) + contarColumnasDisponibles(p1.getSymbol()) + contarDiagonalesDisponibles(p1.getSymbol());
+        int utilidadP2 = contarFilasDisponibles(p2.getSymbol()) + contarColumnasDisponibles(p2.getSymbol()) + contarDiagonalesDisponibles(p2.getSymbol());
+
+        return utilidadP1 - utilidadP2;
+    }
 }

@@ -125,5 +125,14 @@ public class Juego {
             return "X";
         }
     }
+    
+    public Tree<Tablero> getChild(Tablero tab){
+        
+        Tree<Tablero> child = null;
+        
+        
+        
+        return child;
+    }
 
 }

@@ -42,5 +42,5 @@ public class Player {
     public void setTurn(boolean turn) {
         this.turn = turn;
     }
-
+        
 }

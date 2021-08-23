@@ -1,8 +1,5 @@
 package Jugadores;
 
-
-import java.util.Objects;
-
 public class Persona extends Player {
 
     public Persona() {
