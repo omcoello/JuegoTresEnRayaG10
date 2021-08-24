@@ -1,6 +1,7 @@
 package Logic;
 
 import Jugadores.Player;
+import Tree.Tree;
 import java.util.*;
 
 public class Tablero {
@@ -159,8 +160,8 @@ public class Tablero {
     public LinkedHashSet<String[]> getListaColumnas() {
         LinkedHashSet<String[]> resultante = new LinkedHashSet<>();
         String[][] aux = new String[3][3];
-        for(int i = 0; i<tablero.length; i++){
-            for(int j = 0; j<tablero[i].length; j++){
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[i].length; j++) {
                 aux[i][j] = tablero[j][i];
             }
         }
@@ -228,4 +229,53 @@ public class Tablero {
 
         return utilidadP1 - utilidadP2;
     }
+
+    public Tree<Tablero> getMinimun(Tree<Tablero> subTree, Player p1, Player p2) {
+        Tree<Tablero> tree = null;
+        if (validateHeight(subTree)) {
+            ArrayList<Tree<Tablero>> arr = subTree.getRoot().getChildren();
+
+            for (Tree<Tablero> t : arr) {
+
+                ArrayList<Integer> lista = new ArrayList<>();
+
+                for (Tree<Tablero> hoja : t.getRoot().getChildren()) {
+
+                    lista.add(hoja.getRoot().getContent().calculateUtility(p1, p2));
+                }
+
+                t.getRoot().getContent().setUtilidad(Collections.min(lista));
+
+                if (tree == null || t.getRoot().getContent().getUtilidad() > tree.getRoot().getContent().getUtilidad()) {
+                    tree = t;
+                }
+
+            }
+        } else {
+            ArrayList<Tree<Tablero>> arr = subTree.getRoot().getChildren();
+
+            for (Tree<Tablero> t : arr) {
+
+ 
+                t.getRoot().getContent().setUtilidad(t.getRoot().getContent().calculateUtility(p1,p2));
+
+                if (tree == null || t.getRoot().getContent().getUtilidad() > tree.getRoot().getContent().getUtilidad()) {
+                    tree = t;
+                }
+
+            }
+        }
+        return tree;
+    }
+
+    public boolean validateHeight(Tree<Tablero> tree) {
+        if (!tree.getRoot().getChildren().isEmpty()) {
+            if (!tree.getRoot().getChildren().get(0).getRoot().getChildren().isEmpty()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
