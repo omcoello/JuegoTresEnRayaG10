@@ -5,8 +5,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 public class Main extends Application {
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -14,7 +14,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         MenuPane mp = new MenuPane();
-        Scene scene = new Scene(mp.getMenuRoot(),500,500);
+        Scene scene = new Scene(mp.getMenuRoot(), 600, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

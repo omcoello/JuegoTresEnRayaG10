@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 public class GamePane {
     private GridPane gameRoot;
     
-    public GridPane gameRoot(){
+    public GridPane getGameRoot(){
         
         gameRoot = new GridPane();
         
