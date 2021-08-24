@@ -230,7 +230,7 @@ public class Tablero {
         return utilidadP1 - utilidadP2;
     }
 
-    public Tree<Tablero> getMinimun(Tree<Tablero> subTree, Player p1, Player p2) {
+    public Tree<Tablero> suggestMovement(Tree<Tablero> subTree, Player p1, Player p2) {
         Tree<Tablero> tree = null;
         if (validateHeight(subTree)) {
             ArrayList<Tree<Tablero>> arr = subTree.getRoot().getChildren();

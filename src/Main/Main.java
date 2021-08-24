@@ -1,22 +1,22 @@
 package Main;
 
-import Jugadores.ComputadoraIA;
-import Jugadores.Persona;
-import Logic.Tablero;
+import Pane.*;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-
-public class Main {
+public class Main extends Application {
     public static void main(String[] args) {
-        Persona player1 = new Persona();
-        ComputadoraIA cpu = new ComputadoraIA();
-        Tablero chess = new Tablero();
-        /*Game g1 = new Game(player1, cpu, chess);
-        g1.startGame();*/
+        launch(args);
+    }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        MenuPane mp = new MenuPane();
+        Scene scene = new Scene(mp.getMenuRoot(),500,500);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
 }
