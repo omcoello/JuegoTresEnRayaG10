@@ -1,13 +1,12 @@
 package Pane;
 
+import Jugadores.Player;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,6 +20,11 @@ import javafx.stage.Stage;
 public class MenuPane {
 
     public VBox menuRoot;
+    public static ToggleGroup tgSymbol;
+    public static ToggleGroup tgMode;
+    public static ToggleGroup tgTurn;
+    public static Player p1;
+    public static Player p2;
 
     public VBox getMenuRoot() {
 
@@ -33,22 +37,22 @@ public class MenuPane {
         VBox titleVb = new VBox(25);
         titleVb.getChildren().add(title);
         titleVb.setAlignment(Pos.CENTER);
-        titleVb.setPadding(new Insets(5,10,150,10));
+        titleVb.setPadding(new Insets(5, 10, 150, 10));
 
         //Simbolo
         HBox symbolHb = new HBox(15);
-        Label symbolLabel = new Label("Simbolo: ");
+        Label symbolLabel = new Label("Simbolo P1: ");
         symbolLabel.setStyle(style);
-        ToggleGroup tg = new ToggleGroup();
+        tgSymbol = new ToggleGroup();
 
         RadioButton xRb = new RadioButton("X");
         xRb.setUserData("X");
-        xRb.setToggleGroup(tg);
+        xRb.setToggleGroup(tgSymbol);
         xRb.setStyle(style);
 
         RadioButton oRb = new RadioButton("O");
         oRb.setUserData("O");
-        oRb.setToggleGroup(tg);
+        oRb.setToggleGroup(tgSymbol);
         oRb.setStyle(style);
 
         symbolHb.getChildren().addAll(symbolLabel, xRb, oRb);
@@ -57,54 +61,95 @@ public class MenuPane {
         HBox modeHb = new HBox(15);
         Label modeLabel = new Label("Modo de juego: ");
         modeLabel.setStyle(style);
-        ToggleGroup tgMode = new ToggleGroup();
+        tgMode = new ToggleGroup();
 
         RadioButton oneVcpuRb = new RadioButton("P1 vs CPU");
-        oneVcpuRb.setUserData("X");
+        oneVcpuRb.setUserData("p1Vcpu");
         oneVcpuRb.setToggleGroup(tgMode);
         oneVcpuRb.setStyle(style);
 
         RadioButton oneVoneRb = new RadioButton("P1 vs P2");
-        oneVoneRb.setUserData("O");
+        oneVoneRb.setUserData("p1Vp2");
         oneVoneRb.setToggleGroup(tgMode);
         oneVoneRb.setStyle(style);
 
         RadioButton cpuVcpuRb = new RadioButton("CPU vs CPU");
-        cpuVcpuRb.setUserData("O");
+        cpuVcpuRb.setUserData("cpuVcpu");
         cpuVcpuRb.setToggleGroup(tgMode);
         cpuVcpuRb.setStyle(style);
 
         modeHb.getChildren().addAll(modeLabel, oneVcpuRb, oneVoneRb, cpuVcpuRb);
         
+        //Turno
+        tgTurn = new ToggleGroup();
+        HBox turnHb = new HBox(15);
+        Label turnLabel = new Label("Empezar turno P1: ");
+        turnLabel.setStyle(style);
+        
+        RadioButton yesRb = new RadioButton("SI");
+        yesRb.setUserData("SI");
+        yesRb.setToggleGroup(tgTurn);
+        yesRb.setStyle(style);
+
+        RadioButton noRb = new RadioButton("NO");
+        noRb.setUserData("NO");
+        noRb.setToggleGroup(tgTurn);
+        noRb.setStyle(style);
+
+        turnHb.getChildren().addAll(turnLabel, yesRb, noRb);
+        
+        
+        
+
         //Boton de jugar
         VBox playHb = new VBox(20);
         Button playButton = new Button("Jugar");
         playButton.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
         playHb.getChildren().add(playButton);
-        
+
         playButton.setOnAction(e -> {
-        
-            
-        
-        
+            if (tgMode.getSelectedToggle() != null && tgSymbol.getSelectedToggle() != null && tgTurn.getSelectedToggle() != null) {
+                generateGameWindow();
+            }
         });
 
         //Anadiendo nodos al root
         menuRoot.getChildren().add(titleVb);
         menuRoot.getChildren().add(symbolHb);
         menuRoot.getChildren().add(modeHb);
+        menuRoot.getChildren().add(turnHb);
         menuRoot.getChildren().add(playHb);
+        
 
         //Diseno del root
         menuRoot.setPadding(new Insets(40, 10, 15, 10));
 
         return menuRoot;
     }
-    
-    public void generateGameWindow(){
+
+    public void generateGameWindow() {
+        p1 = new Player();
+        p2 = new Player();
+        configurateSymbols(p1, p2);
         Stage gameStage = new Stage();
-        Scene gameScene = new Scene(new GamePane().getGameRoot(),650,650);
+        Scene gameScene = new Scene(new GamePane().getGameRoot(), 650, 650);
         gameStage.setScene(gameScene);
+        gameStage.show();
+                
+
         
+
+    }
+
+    public void configurateSymbols(Player p1, Player p2) {
+
+        String mainSymbol = String.valueOf(MenuPane.tgSymbol.getSelectedToggle().getUserData());
+        p1.setSymbol(mainSymbol);
+
+        if (mainSymbol.equals("X")) {
+            p2.setSymbol("O");
+        } else {
+            p2.setSymbol("X");
+        }
     }
 }

@@ -1,9 +1,8 @@
 package Logic;
 
-import Jugadores.ComputadoraIA;
-import Jugadores.Persona;
+import Jugadores.Player;
+import Pane.MenuPane;
 import Tree.Tree;
-import java.util.Scanner;
 
 /**
  *
@@ -11,93 +10,42 @@ import java.util.Scanner;
  */
 public class Juego {
 
-    private Tree<Tablero> generalTree;
-    private String iniTurn;
+    public Tree<Tablero> generalTree;
+    public String iniTurn;
 
-    Persona humanPlayer = new Persona();
-    ComputadoraIA computadoraIA = new ComputadoraIA();
-    Tablero tablero = new Tablero();
+    Player p1 = new Player();
+    Player p2 = new Player();
+    public Tablero tablero = new Tablero();
 
-    public Juego(Persona humanPlayer, ComputadoraIA computadoraIA, Tablero tablero) {
-        this.humanPlayer = humanPlayer;
-        this.computadoraIA = computadoraIA;
-        this.tablero = tablero;
+    public Juego(Player p1, Player p2, String iniTurn) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.tablero = new Tablero();
+        this.iniTurn = iniTurn;
         generalTree = generateTree(new Tablero(), iniTurn, new Tree());
     }
 
-    public void startGame() {
-        asignarSimbolos();
-        escogerTurno();
-        tablero.verTablero();
-        ingresarSimbolos();
-    }
+    public void refreshTab(int fila, int columna) {
+        while (!tablero.isFullTab() && tablero.isWinner(p1) && tablero.isWinner(p2)) {
 
-    private void asignarSimbolos() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Escoge tu simbolo (X || O): ");
-        String simbolo = sc.nextLine();
-        if (simbolo.toUpperCase().equals("X")) {
-            humanPlayer.setSymbol("X");
-            computadoraIA.setSymbol("O");
-        } else {
-            humanPlayer.setSymbol("O");
-            computadoraIA.setSymbol("X");
-        }
-    }
-
-    private void ingresarSimbolos() {
-        while (!tablero.isFullTab() && tablero.isWinner(humanPlayer) && tablero.isWinner(computadoraIA)) {
-
-            if (humanPlayer.isTurn()) {
-                ingresoHumano();
-                humanPlayer.setTurn(false);
-                computadoraIA.setTurn(true);
-            } else if (computadoraIA.isTurn()) {
-                ingresoPC();
-                computadoraIA.setTurn(false);
-                humanPlayer.setTurn(true);
+            if (p1.isTurn()) {
+                tablero.getTablero()[fila][columna] = p1.getSymbol();
+                p1.setTurn(false);
+                p2.setTurn(true);
+            } else if (p2.isTurn()) {
+                tablero.getTablero()[fila][columna] = p2.getSymbol();
+                p2.setTurn(false);
+                p1.setTurn(true);
             }
 
-            if (tablero.isWinner(humanPlayer)) {
-                System.out.println("GANADOR: HUMANO");
-            } else if (tablero.isWinner(computadoraIA)) {
-                System.out.println("GANADOR: CPU");
+            if (tablero.isWinner(p1)) {
+                System.out.println("GANADOR: " + p1.getName());
+            } else if (tablero.isWinner(p2)) {
+                System.out.println("GANADOR: " + p2.getName());
             }
         }
     }
-
-    private void ingresoHumano() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Turno humano: " + humanPlayer.getSymbol());
-        System.out.println("Posiciones: ");
-        int pos_i = sc.nextInt();
-        int pos_j = sc.nextInt();
-        tablero.getTablero()[pos_i][pos_j] = humanPlayer.getSymbol();
-        tablero.verTablero();
-    }
-
-    //SOLO DE PRUEBA, DEBERIA SER EL ALGORITMO QUE ELIGA EL INGRESO
-    private void ingresoPC() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Turno cpu: " + computadoraIA.getSymbol());
-        System.out.println("Posiciones: ");
-        int pos_i = sc.nextInt();
-        int pos_j = sc.nextInt();
-        tablero.getTablero()[pos_i][pos_j] = computadoraIA.getSymbol();
-        tablero.verTablero();
-    }
-
-    private void escogerTurno() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("¿Quien empieza? 1 = humano, 2 = computadora: ");
-        String lector = sc.nextLine();
-        if (lector.equals("1")) {
-            humanPlayer.setTurn(true);
-        } else {
-            humanPlayer.setTurn(false);
-            computadoraIA.setTurn(true);
-        }
-    }
+    
 
     public Tree<Tablero> generateTree(Tablero tab, String turn, Tree<Tablero> tree) {
 
@@ -119,6 +67,15 @@ public class Juego {
     }
 
     public String alternateTurn(String turn) {
+        if (turn.equals("SI")) {
+            return String.valueOf(MenuPane.tgTurn.getSelectedToggle().getUserData());
+        } else if (turn.equals("NO")) {
+            if (String.valueOf(MenuPane.tgTurn.getSelectedToggle().getUserData()).equals("X")) {
+                return "O";
+            } else {
+                return "X";
+            }
+        }
         if (turn.equals("X")) {
             return "O";
         } else {
