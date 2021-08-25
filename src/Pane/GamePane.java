@@ -37,13 +37,14 @@ public class GamePane {
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
                 Button button;
+                
                 String info = tab[i][j];
                 if (info.equals("-1")) {
                     button = new Button("");
                 } else {
                     button = new Button(info);
                 }
-
+                button.setMinSize(350/3, 350/3);
                 button.setUserData(i + "," + j);
 
                 //Accionando botones
@@ -61,7 +62,7 @@ public class GamePane {
     public void refreshTabWindow(int fila, int columna) {
         game.refreshTab(fila, columna);
         game.setGameTree(game.getChild(game.tablero, game.generalTree));
-        game.tablero.suggestMovement(game.getGameTree(), MenuPane.p1, MenuPane.p2);
+        //game.tablero.suggestMovement(game.getGameTree(), MenuPane.p1, MenuPane.p2);
         game.tablero.verTablero();
 
     }
