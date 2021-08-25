@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Tablero {
 
-    private final String[][] tablero;
+    private String[][] tablero;
     private int utilidad;
 
     public Tablero() {
@@ -41,7 +41,7 @@ public class Tablero {
         }
         return 0;
     }
-/*
+
     //imprime la matriz
     public void verTablero() {
         for (String[] String : tablero) {
@@ -55,7 +55,7 @@ public class Tablero {
             System.out.println("|");
         }
     }
-*/
+
     //contadores para calcular la funcion de utilidad
     public int contarFilasDisponibles(String jugador) {
         int count = 0;

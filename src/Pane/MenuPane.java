@@ -79,13 +79,13 @@ public class MenuPane {
         cpuVcpuRb.setStyle(style);
 
         modeHb.getChildren().addAll(modeLabel, oneVcpuRb, oneVoneRb, cpuVcpuRb);
-        
+
         //Turno
         tgTurn = new ToggleGroup();
         HBox turnHb = new HBox(15);
         Label turnLabel = new Label("Empezar turno P1: ");
         turnLabel.setStyle(style);
-        
+
         RadioButton yesRb = new RadioButton("SI");
         yesRb.setUserData("SI");
         yesRb.setToggleGroup(tgTurn);
@@ -97,9 +97,6 @@ public class MenuPane {
         noRb.setStyle(style);
 
         turnHb.getChildren().addAll(turnLabel, yesRb, noRb);
-        
-        
-        
 
         //Boton de jugar
         VBox playHb = new VBox(20);
@@ -119,7 +116,6 @@ public class MenuPane {
         menuRoot.getChildren().add(modeHb);
         menuRoot.getChildren().add(turnHb);
         menuRoot.getChildren().add(playHb);
-        
 
         //Diseno del root
         menuRoot.setPadding(new Insets(40, 10, 15, 10));
@@ -130,18 +126,16 @@ public class MenuPane {
     public void generateGameWindow() {
         p1 = new Player();
         p2 = new Player();
-        configurateSymbols(p1, p2);
-        Stage gameStage = new Stage();
-        Scene gameScene = new Scene(new GamePane().getGameRoot(), 650, 650);
-        gameStage.setScene(gameScene);
-        gameStage.show();
-                
-
-        
+        configurateSymbols();
+        configurateMode();
+        GamePane.gameStage = new Stage();
+        GamePane.gameScene = new Scene(new GamePane().getGameRoot(), 350, 350);
+        GamePane.gameStage.setScene(GamePane.gameScene);
+        GamePane.gameStage.show();
 
     }
 
-    public void configurateSymbols(Player p1, Player p2) {
+    public void configurateSymbols() {
 
         String mainSymbol = String.valueOf(MenuPane.tgSymbol.getSelectedToggle().getUserData());
         p1.setSymbol(mainSymbol);
@@ -150,6 +144,13 @@ public class MenuPane {
             p2.setSymbol("O");
         } else {
             p2.setSymbol("X");
+        }
+    }
+
+    public void configurateMode() {
+        String mode = String.valueOf(tgMode.getSelectedToggle().getUserData());
+        if(mode.equals("p1Vcpu")){
+            
         }
     }
 }

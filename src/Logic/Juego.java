@@ -11,11 +11,13 @@ import Tree.Tree;
 public class Juego {
 
     public Tree<Tablero> generalTree;
+    public Tree<Tablero> gameTree;
+
     public String iniTurn;
 
-    Player p1 = new Player();
-    Player p2 = new Player();
-    public Tablero tablero = new Tablero();
+    public static Player p1 = new Player();
+    public static Player p2 = new Player();
+    public static Tablero tablero = new Tablero();
 
     public Juego(Player p1, Player p2, String iniTurn) {
         this.p1 = p1;
@@ -25,27 +27,31 @@ public class Juego {
         generalTree = generateTree(new Tablero(), iniTurn, new Tree());
     }
 
+    public Tree<Tablero> getGameTree() {
+        return gameTree;
+    }
+
+    public void setGameTree(Tree<Tablero> gameTree) {
+        this.gameTree = gameTree;
+    }
+
     public void refreshTab(int fila, int columna) {
-        while (!tablero.isFullTab() && tablero.isWinner(p1) && tablero.isWinner(p2)) {
-
-            if (p1.isTurn()) {
-                tablero.getTablero()[fila][columna] = p1.getSymbol();
-                p1.setTurn(false);
-                p2.setTurn(true);
-            } else if (p2.isTurn()) {
-                tablero.getTablero()[fila][columna] = p2.getSymbol();
-                p2.setTurn(false);
-                p1.setTurn(true);
-            }
-
-            if (tablero.isWinner(p1)) {
-                System.out.println("GANADOR: " + p1.getName());
-            } else if (tablero.isWinner(p2)) {
-                System.out.println("GANADOR: " + p2.getName());
-            }
+        if (p1.isTurn()) {
+            tablero.getTablero()[fila][columna] = p1.getSymbol();
+            p1.setTurn(false);
+            p2.setTurn(true);
+            System.out.println(p1.getSymbol() + " <- Simbolo");
+        } else if (p2.isTurn()) {
+            tablero.getTablero()[fila][columna] = p2.getSymbol();
+            System.out.println(p2.getSymbol() + " <- Simbolo");
+            p2.setTurn(false);
+            p1.setTurn(true);
         }
     }
-    
+
+    public boolean winCondition() {
+        return tablero.isFullTab() || tablero.isWinner(p1) || tablero.isWinner(p2);
+    }
 
     public Tree<Tablero> generateTree(Tablero tab, String turn, Tree<Tablero> tree) {
 
@@ -68,8 +74,12 @@ public class Juego {
 
     public String alternateTurn(String turn) {
         if (turn.equals("SI")) {
+            p1.setTurn(true);
+            p2.setTurn(false);
             return String.valueOf(MenuPane.tgTurn.getSelectedToggle().getUserData());
         } else if (turn.equals("NO")) {
+            p1.setTurn(false);
+            p2.setTurn(true);
             if (String.valueOf(MenuPane.tgTurn.getSelectedToggle().getUserData()).equals("X")) {
                 return "O";
             } else {
@@ -84,7 +94,11 @@ public class Juego {
     }
 
     public Tree<Tablero> getChild(Tablero tab, Tree<Tablero> tree) {
-
+        /*
+        if(tree.getRoot().getContent().equals(tab)){
+            return tree;
+        }
+        */
         Tree<Tablero> child = null;
         if (!tree.getRoot().getChildren().isEmpty()) {
             for (Tree<Tablero> t : tree.getRoot().getChildren()) {
