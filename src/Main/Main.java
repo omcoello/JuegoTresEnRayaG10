@@ -14,7 +14,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         MenuPane mp = new MenuPane();
-        Scene scene = new Scene(mp.getMenuRoot(), 600, 600);
+        Scene scene = new Scene(mp.getMenuRoot(), 500, 500);
         primaryStage.setScene(scene);        
         primaryStage.show();        
     }

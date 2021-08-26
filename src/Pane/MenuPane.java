@@ -1,6 +1,7 @@
 package Pane;
 
 import Jugadores.Player;
+import java.io.File;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,8 +9,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -33,7 +42,7 @@ public class MenuPane {
 
         //Titulo
         Text title = new Text("Tres en Raya");
-        title.setStyle(style);
+        title.setStyle("-fx-font-weight: bold; -fx-font-size: 24px;-fx-background-color: #44BEC6;");
         VBox titleVb = new VBox(25);
         titleVb.getChildren().add(title);
         titleVb.setAlignment(Pos.CENTER);
@@ -103,6 +112,7 @@ public class MenuPane {
         Button playButton = new Button("Jugar");
         playButton.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
         playHb.getChildren().add(playButton);
+        playHb.setAlignment(Pos.CENTER);
 
         playButton.setOnAction(e -> {
             if (tgMode.getSelectedToggle() != null && tgSymbol.getSelectedToggle() != null && tgTurn.getSelectedToggle() != null) {
@@ -118,6 +128,10 @@ public class MenuPane {
         menuRoot.getChildren().add(playHb);
 
         //Diseno del root
+        File path = new File("src/Resources/table.jpg");
+        Image img = new Image(path.toURI().toString());
+        menuRoot.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(500, 500, false, false, false, false))));
+        
         menuRoot.setPadding(new Insets(40, 10, 15, 10));
 
         return menuRoot;
