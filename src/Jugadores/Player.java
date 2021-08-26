@@ -9,6 +9,7 @@ public class Player {
     private String name;
     private String symbol;
     private boolean turn;
+    
 
     public Player() {
     }
@@ -43,7 +44,8 @@ public class Player {
         this.turn = turn;
     }
     
-    public void setAutomaticTurn(){
+    public void automaticMove(){
+        
         
     }
 }

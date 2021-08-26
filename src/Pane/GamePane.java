@@ -74,10 +74,13 @@ public class GamePane {
         
 
     }
+    public void markTable(){
+        
+    }
 
     public void showGameOver(String fila, String columna) {
+        
         if (!game.winCondition()) {
-
             refreshTabWindow(Integer.valueOf(fila), Integer.valueOf(columna));
             refreshScene();
         } else {

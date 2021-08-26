@@ -3,6 +3,7 @@ package Logic;
 import Jugadores.Player;
 import Pane.MenuPane;
 import Tree.Tree;
+import java.util.ArrayList;
 
 /**
  *
@@ -54,8 +55,11 @@ public class Juego {
     }
 
     public Tree<Tablero> generateTree(Tablero tab, String turn, Tree<Tablero> tree) {
-
+        if (tab.isEmptyTab()) {            
+            turn = initializeTurn(turn);
+        }
         if (tab.isEmptyTab() || !tab.isFullTab()) {
+            tab.verTablero();
             String casillas[][] = tab.getTablero();
             for (int i = 0; i < 3; ++i) {
                 for (int j = 0; j < 3; ++j) {
@@ -63,7 +67,9 @@ public class Juego {
                         casillas[i][j] = turn;
                         tree.getRoot().getChildren().add(new Tree(tab));
                         turn = alternateTurn(turn);
-                        tree.getRoot().getChildren().add(generateTree(tab, turn, tree.getRoot().getChildren().get(tree.getRoot().getChildren().size() - 1)));
+                        ArrayList<Tree<Tablero>> children = tree.getRoot().getChildren();
+                        Tree<Tablero> subtree = generateTree(tab, turn, children.get(children.size() - 1));
+                        children.add(subtree);
                     }
                 }
             }
@@ -73,23 +79,27 @@ public class Juego {
     }
 
     public String alternateTurn(String turn) {
-        if (turn.equals("SI")) {
-            p1.setTurn(true);
-            p2.setTurn(false);
-            return String.valueOf(MenuPane.tgTurn.getSelectedToggle().getUserData());
-        } else if (turn.equals("NO")) {
-            p1.setTurn(false);
-            p2.setTurn(true);
-            if (String.valueOf(MenuPane.tgTurn.getSelectedToggle().getUserData()).equals("X")) {
-                return "O";
-            } else {
-                return "X";
-            }
-        }
+
         if (turn.equals("X")) {
             return "O";
         } else {
             return "X";
+        }
+    }
+
+    public String initializeTurn(String turn) {
+        if (turn.equals("SI")) {
+            p1.setTurn(true);
+            p2.setTurn(false);
+            return String.valueOf(MenuPane.tgSymbol.getSelectedToggle().getUserData());
+        } else {
+            p1.setTurn(false);
+            p2.setTurn(true);
+            if (String.valueOf(MenuPane.tgSymbol.getSelectedToggle().getUserData()).equals("X")) {
+                return "O";
+            } else {
+                return "X";
+            }
         }
     }
 
@@ -98,7 +108,7 @@ public class Juego {
         if(tree.getRoot().getContent().equals(tab)){
             return tree;
         }
-        */
+         */
         Tree<Tablero> child = null;
         if (!tree.getRoot().getChildren().isEmpty()) {
             for (Tree<Tablero> t : tree.getRoot().getChildren()) {
