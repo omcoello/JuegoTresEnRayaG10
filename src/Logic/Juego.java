@@ -4,6 +4,7 @@ import Jugadores.Player;
 import Pane.MenuPane;
 import Tree.Tree;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  *
@@ -25,7 +26,7 @@ public class Juego {
         this.p2 = p2;
         this.tablero = new Tablero();
         this.iniTurn = iniTurn;
-        generalTree = generateTree(new Tablero(), iniTurn, new Tree());
+        generalTree = genericTree(iniTurn);
     }
 
     public Tree<Tablero> getGameTree() {
@@ -55,7 +56,7 @@ public class Juego {
     }
 
     public Tree<Tablero> generateTree(Tablero tab, String turn, Tree<Tablero> tree) {
-        if (tab.isEmptyTab()) {            
+        if (tab.isEmptyTab()) {
             turn = initializeTurn(turn);
         }
         if (tab.isEmptyTab() || !tab.isFullTab()) {
@@ -73,6 +74,67 @@ public class Juego {
                     }
                 }
             }
+        }
+
+        return tree;
+    }
+    static int count = 0;
+
+    public Tree<Tablero> genericTree(String turn) {
+        Tree<Tablero> tree = new Tree(new Tablero());
+        Stack<Tree<Tablero>> op = new Stack<>();
+        Stack<Tree<Tablero>> xp = new Stack<>();
+
+        turn = initializeTurn(turn);
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                if (tree.getRoot().getContent().getTablero()[i][j].equals("-1")) {
+                    Tablero cp = new Tablero();
+                    tree.getRoot().getContent().getTablero()[i][j] = turn;
+                    cp.copyTab(tree.getRoot().getContent());
+                    tree.getRoot().getChildren().add(new Tree(cp));
+                    op.push(tree.getRoot().getChildren().get(tree.getRoot().getChildren().size() - 1));
+                }
+            }
+        }
+        turn = alternateTurn(turn);
+        while (!op.isEmpty() || !xp.isEmpty()) {
+            while (!op.isEmpty()) {
+                Tree<Tablero> t = op.pop();
+                for (int i = 0; i < 3; ++i) {
+                    for (int j = 0; j < 3; ++j) {
+                        if (t.getRoot().getContent().getTablero()[i][j].equals("-1")) {
+                            Tablero cp = new Tablero();
+                            t.getRoot().getContent().getTablero()[i][j] = turn;
+                            cp.copyTab(t.getRoot().getContent());
+                            cp.verTablero();
+                            if (!t.getRoot().getContent().isFullTab()) {
+                                t.getRoot().getChildren().add(new Tree(cp));
+                                op.push(t.getRoot().getChildren().get(t.getRoot().getChildren().size() - 1));
+                            }
+                        }
+                        System.out.println("count: " + count++);
+                    }
+                }
+            }
+            turn = alternateTurn(turn);
+            while (!xp.isEmpty()) {
+                Tree<Tablero> t = xp.pop();
+                for (int i = 0; i < 3; ++i) {
+                    for (int j = 0; j < 3; ++j) {
+                        if (t.getRoot().getContent().getTablero()[i][j].equals("-1")) {
+                            Tablero cp = new Tablero();
+                            t.getRoot().getContent().getTablero()[i][j] = turn;
+                            cp.copyTab(t.getRoot().getContent());
+                            if (!t.getRoot().getContent().isFullTab()) {
+                                t.getRoot().getChildren().add(new Tree(cp));
+                                xp.push(t.getRoot().getChildren().get(t.getRoot().getChildren().size() - 1));
+                            }
+                        }
+                    }
+                }
+            }
+            turn = alternateTurn(turn);
         }
 
         return tree;

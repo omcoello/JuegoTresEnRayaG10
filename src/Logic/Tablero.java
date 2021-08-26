@@ -31,6 +31,14 @@ public class Tablero {
         this.utilidad = utilidad;
     }
 
+    public void copyTab(Tablero tablero) {
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                this.getTablero()[i][j] = tablero.getTablero()[i][j];
+            }
+        }
+    }
+
     public int compareTab(Tablero tab) {
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
@@ -256,8 +264,7 @@ public class Tablero {
 
             for (Tree<Tablero> t : arr) {
 
- 
-                t.getRoot().getContent().setUtilidad(t.getRoot().getContent().calculateUtility(p1,p2));
+                t.getRoot().getContent().setUtilidad(t.getRoot().getContent().calculateUtility(p1, p2));
 
                 if (tree == null || t.getRoot().getContent().getUtilidad() > tree.getRoot().getContent().getUtilidad()) {
                     tree = t;
